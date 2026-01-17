@@ -1,0 +1,16 @@
+**/.vs
+  **/.vscode
+  **/bin
+  **/obj
+  **/.git
+  **/.gitignore
+  **/publish
+  **/app.db
+  **/build.log
+  **/build_detailed.log
+  **/*.user
+  **/deploy_*.ps1
+  **/deploy_*.sql
+  **/.deployignore
+  **/Migrations
+  
