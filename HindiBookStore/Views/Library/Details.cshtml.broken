@@ -1,0 +1,117 @@
+@model HindiBookStore.Models.Book
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+            {
+                <img src="@Url.Content(Model.CoverImagePath)" alt="@Model.Title" class="img-fluid book-detail-cover\" />📚</div>';" />
+            }
+            else
+            {
+                <div class="book-detail-placeholder">📚</div>
+            }
+        </div>
+        <div class="col-md-8">
+            <h1 class="book-detail-title">@Model.Title</h1>
+            <p class="book-detail-author">by @Model.Author</p>
+            
+            <div class="book-meta mb-3">
+                <span class="badge bg-secondary">@Model.Category?.Name</span>
+                <span class="badge bg-info">@Model.Genre</span>
+            </div>
+            
+            <div class="book-description mb-4">
+                <h5>विवरण (Description)</h5>
+                <p>@Model.Description</p>
+            </div>
+            
+            @if (!string.IsNullOrEmpty(Model.PdfFilePath))
+            {
+                <div class="book-actions">
+                    <a asp-controller="Library" asp-action="Read" asp-route-id="@Model.Id" class="btn btn-read-online">
+                        📖 Read Online
+                    </a>
+                    <a asp-controller="Library" asp-action="Download" asp-route-id="@Model.Id" class="btn btn-download">
+                        📥 Download PDF
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning">PDF not available for this book.</div>
+            }
+            
+            <a asp-controller="Library" asp-action="Index" class="btn btn-secondary mt-3">← Back to Library</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .book-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-read-online {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-read-online:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        color: white;
+    }
+
+    .btn-download {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+    }
+
+    .btn-download:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+        color: white;
+    }
+
+    @@media (max-width: 576px) {
+        .book-actions {
+            flex-direction: column;
+        }
+        
+        .btn-read-online,
+        .btn-download {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+

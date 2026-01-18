@@ -1,0 +1,75 @@
+@model IEnumerable<HindiBookStore.Models.Book>
+
+@{
+    ViewData["Title"] = "Library";
+    var categories = ViewBag.Categories as IEnumerable<HindiBookStore.Models.Category>;
+    var currentSearch = ViewBag.CurrentSearch as string;
+    var currentCategoryId = ViewBag.CurrentCategoryId as int?;
+}
+
+<div class="container my-4">
+    <h1 class="mb-4">पुस्तकालय (Library)</h1> 
+    
+    <!-- Search and Filter -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form asp-controller="Library" asp-action="Index" method="get" class="row g-3">
+                <div class="col-md-5">
+                    <input type="text" name="search" value="@currentSearch" class="form-control" placeholder="Search by title or author..." />
+                </div>
+                <div class="col-md-4">
+                    <select name="categoryId" class="form-select">
+                        <option value="">All Categories</option>
+                        @if (categories != null)
+                        {
+                            @foreach (var category in categories)
+                            {
+                                <option value="@category.Id" selected="@(currentCategoryId == category.Id)">@category.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Books Grid -->
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var book in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="book-card">
+                        <a asp-action="Details" asp-route-id="@book.Id">
+                            @if (!string.IsNullOrEmpty(book.CoverImagePath))
+                            {
+                                <img src="@Url.Content(book.CoverImagePath)" alt="@book.Title" class=\"book-cover\" />📚</div>';" />
+                            }
+                            else
+                            {
+                                <div class="book-cover-placeholder">📚</div> 
+                            }
+                        </a>
+                        <div class="book-info">
+                            <h5 class="book-title">@book.Title</h5>
+                            <p class="book-author">@book.Author</p>
+                            <span class="book-category">@book.Category?.Name</span>
+                            <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-view">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            कोई पुस्तक नहीं मिली। (No books found) 
+        </div>
+    }
+</div>
+

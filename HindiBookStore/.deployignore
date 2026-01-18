@@ -1,0 +1,15 @@
+# Files and folders to preserve during deployment
+# This prevents overwriting user-uploaded content
+
+# Preserve all user uploads
+wwwroot/uploads/covers/*
+wwwroot/uploads/pdfs/*
+
+# Preserve database files (if using SQLite locally)
+*.db
+*.db-shm
+*.db-wal
+
+# Preserve logs
+Logs/
+*.log

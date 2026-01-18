@@ -1,0 +1,63 @@
+﻿@model IEnumerable<HindiBookStore.Models.Book>
+
+@{
+    ViewData["Title"] = "Anchor Hindi Book Store - Free Hindi Books";
+}
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="hero-title">ANCHOR पुस्तकालय</h1>
+                <p class="hero-subtitle">मुफ़्त हिंदी किताबें पढ़ें और डाउनलोड करें</p>
+                <p class="hero-description">Free Hindi books to read and download</p>
+                <a asp-controller="Library" asp-action="Index" class="btn btn-hero">Browse Library</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Books Section -->
+<div class="container my-5">
+    <h2 class="section-title">नई पुस्तकें <span class="subtitle">(New Arrivals)</span></h2> 
+    
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var book in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="book-card">
+                        <a asp-controller="Library" asp-action="Details" asp-route-id="@book.Id">
+                            @if (!string.IsNullOrEmpty(book.CoverImagePath))
+                            {
+                                <img src="@book.CoverImagePath" alt="@book.Title" class="book-cover" />
+                            }
+                            else
+                            {
+                                <div class="book-cover-placeholder">
+                                    📚 
+                                </div>
+                            }
+                        </a>
+                        <div class="book-info">
+                            <h5 class="book-title">@book.Title</h5>
+                            <p class="book-author">@book.Author</p>
+                            <span class="book-category">@book.Category?.Name</span>
+                            <a asp-controller="Library" asp-action="Details" asp-route-id="@book.Id" class="btn btn-view">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <p>कोई पुस्तक उपलब्ध नहीं है। (No books available yet)</p>
+        </div>
+    }
+</div> 
+
+
