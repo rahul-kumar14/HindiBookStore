@@ -1,0 +1,27 @@
+# Fly.io Configuration for Hindi Bookstore
+app = "anchorlib"
+primary_region = "sin"  # Singapore (closest to India)
+
+[build]
+
+[env]
+  ASPNETCORE_ENVIRONMENT = "Production"
+
+  [http_service]
+    internal_port = 8080
+      force_https = true
+        auto_stop_machines = "off"  # Prevent cold starts
+          auto_start_machines = true
+            min_machines_running = 1
+
+            [[vm]]
+              memory = "512mb"
+                cpu_kind = "shared"
+                  cpus = 1
+
+                  # Persistent storage for uploads (PDFs & Images)
+                  [mounts]
+                    source = "bookstore_uploads"
+                      destination = "/app/wwwroot/uploads"
+                        initial_size = "3gb"  # 3GB for 200 books
+                        
